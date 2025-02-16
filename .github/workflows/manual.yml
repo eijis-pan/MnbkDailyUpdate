@@ -29,6 +29,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - uses: actions/checkout@v4
+    
     # Runs a single command using the runners shell
 #    - name: Send greeting
 #      run: echo "Hello ${{ inputs.name }}"
@@ -43,5 +45,8 @@ jobs:
 #    - name: CheckGhToken
 #      run: echo "${{ GH_TOKEN }}"
 
+    - name: Create release
+      run: gh release create ${{ github.ref_name }} --generate-notes
+      
     - name: Set AccessToken secret
       run: gh secret set GSP_ACCESS_TOKEN --body "${{ steps.TokenRefreshResponse.outputs.RAT }}"

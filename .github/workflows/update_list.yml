@@ -1,0 +1,55 @@
+name: Update list
+
+on:
+  workflow_dispatch:
+#  schedule:
+#    - cron: '0 18 * * 2'  # 毎週火曜日18:00 UTC（日本時間 水曜3:00）
+#    - cron: '0 18 * * 5'  # 毎週金曜日18:00 UTC（日本時間 土曜3:00）
+
+jobs:
+  update-twitter-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+
+    - name: Install Python Packages
+      run: |
+        uv sync --no-dev --frozen
+
+    - name: Run Update Script
+      env:
+        GSP_ACCESS_TOKEN: ${{ secrets.GSP_ACCESS_TOKEN }}
+      run: |
+        uv run python src/MnbkDailyUpdate/entry_player_list.py
+        uv run python src/MnbkDailyUpdate/battled_player_list.py
+
+    - name: Check for changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        git diff --quiet || echo "CHANGES_DETECTED=true" >> $GITHUB_ENV
+
+    - name: Create Pull Request
+      if: env.CHANGES_DETECTED == 'true'
+      uses: peter-evans/create-pull-request@v6
+      with:
+        branch: "update/player-data"
+        title: "Update Player Data (Automated)"
+        body: |
+          This pull request updates the Mnbk Player List file.
+          - Automated update from GitHub Actions.
+        commit-message: "Update Mnbk Player List file"
+        base: "master"
+        delete-branch: true
+        labels: "automated update"

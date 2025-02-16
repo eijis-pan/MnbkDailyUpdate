@@ -18,6 +18,9 @@ on:
         # The data type of the input
         type: string
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
@@ -39,6 +42,4 @@ jobs:
 #      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"
 
     - name: Set AccessToken secret
-      env:
-          GH_TOKEN: ${{ github.token }}
       run: gh secret set GSP_ACCESS_TOKEN --body "${{ steps.TokenRefreshResponse.outputs.RAT }}"

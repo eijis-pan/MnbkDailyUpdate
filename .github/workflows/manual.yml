@@ -31,22 +31,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    # Runs a single command using the runners shell
-#    - name: Send greeting
-#      run: echo "Hello ${{ inputs.name }}"
-
     - name: Post Token Refresh Request
       id: TokenRefreshResponse
       run: curl -XPOST https://www.googleapis.com/oauth2/v4/token --data "client_id=${{ secrets.GAP_CLIENT_ID }}&client_secret=${{ secrets.GAP_CLIENT_SECRET }}&refresh_token=${{ secrets.GAP_REFRESH_TOKEN }}&grant_type=refresh_token" |  jq -r '"RAT=" + .access_token' >> $GITHUB_OUTPUT
 
-#    - name: RefreshedAccessToken
-#      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"
-
-#    - name: CheckGhToken
-#      run: echo "${{ GH_TOKEN }}"
+    - name: RefreshedAccessToken
+      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"
 
     - name: Create release
       run: gh release create ${{ github.ref_name }} --generate-notes
       
     - name: Set AccessToken secret
-      run: gh secret set GSP_ACCESS_TOKEN --body "${{ steps.TokenRefreshResponse.outputs.RAT }}"
+      run: gh secret set GSP_ACCESS_TOKEN --body "AAA"

@@ -38,5 +38,11 @@ jobs:
 #    - name: RefreshedAccessToken
 #      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"
 
+#    - name: Set AccessToken secret
+#      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}" | gh secret set GSP_ACCESS_TOKEN
+
     - name: Set AccessToken secret
-      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}" | gh secret set GSP_ACCESS_TOKEN
+      run: gh secret set GSP_ACCESS_TOKEN --body "${{ steps.TokenRefreshResponse.outputs.RAT }}"
+
+    - name: view secret
+      run: gh secret list

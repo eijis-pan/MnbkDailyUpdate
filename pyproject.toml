@@ -1,0 +1,18 @@
+[project]
+name = "MnbkDailyUpdate"
+version = "0.1.0"
+description = "Upload Mnbk Player List to GitHub Pages"
+authors = [
+    { name = "eijis-pan", email = "eijis@to2488.ddns.net" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.32.3",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ipykernel>=6.29.5",
+    "ruff>=0.6.9",
+]

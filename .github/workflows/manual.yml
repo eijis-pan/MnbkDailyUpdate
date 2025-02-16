@@ -35,11 +35,8 @@ jobs:
       id: TokenRefreshResponse
       run: curl -XPOST https://www.googleapis.com/oauth2/v4/token --data "client_id=${{ secrets.GAP_CLIENT_ID }}&client_secret=${{ secrets.GAP_CLIENT_SECRET }}&refresh_token=${{ secrets.GAP_REFRESH_TOKEN }}&grant_type=refresh_token" |  jq -r '"RAT=" + .access_token' >> $GITHUB_OUTPUT
 
-    - name: RefreshedAccessToken
-      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"
+#    - name: RefreshedAccessToken
+#      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"
 
-#    - name: Create release
-#      run: gh release create ${{ github.ref_name }} --generate-notes
-      
     - name: Set AccessToken secret
-      run: gh secret set GSP_ACCESS_TOKEN --body "AAA"
+      run: gh secret set GSP_ACCESS_TOKEN < echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"

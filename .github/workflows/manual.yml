@@ -30,8 +30,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
+#    - name: Send greeting
+#      run: echo "Hello ${{ inputs.name }}"
 
     - name: Post Token Refresh Request
       id: TokenRefreshResponse
@@ -43,5 +43,5 @@ jobs:
     - name: CheckGhToken
       run: echo "${{ GH_TOKEN }}"
 
-    - name: Set AccessToken secret
-      run: gh secret set GSP_ACCESS_TOKEN --body "${{ steps.TokenRefreshResponse.outputs.RAT }}"
+#    - name: Set AccessToken secret
+#      run: gh secret set GSP_ACCESS_TOKEN --body "${{ steps.TokenRefreshResponse.outputs.RAT }}"

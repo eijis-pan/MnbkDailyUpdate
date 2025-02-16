@@ -39,4 +39,4 @@ jobs:
 #      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"
 
     - name: Set AccessToken secret
-      run: gh secret set GSP_ACCESS_TOKEN < echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"
+      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}" | gh secret set GSP_ACCESS_TOKEN

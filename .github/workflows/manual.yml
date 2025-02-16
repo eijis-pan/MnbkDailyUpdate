@@ -39,4 +39,6 @@ jobs:
 #      run: echo "${{ steps.TokenRefreshResponse.outputs.RAT }}"
 
     - name: Set AccessToken secret
+      env:
+          GH_TOKEN: ${{ github.token }}
       run: gh secret set GSP_ACCESS_TOKEN --body "${{ steps.TokenRefreshResponse.outputs.RAT }}"

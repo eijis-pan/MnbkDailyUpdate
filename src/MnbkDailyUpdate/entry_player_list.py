@@ -14,8 +14,6 @@ handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
 if __name__ == "__main__":
-    logger.info(os.environ.get("MNBK_SPREADSHEET_URL"))
-    logger.debug(os.environ.get("GSP_ACCESS_TOKEN"))
     try:
         entryPlayerList = get_json()
         logger.debug(entryPlayerList)

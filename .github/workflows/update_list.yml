@@ -51,6 +51,6 @@ jobs:
           This pull request updates the Mnbk Player List file.
           - Automated update from GitHub Actions.
         commit-message: "Update Mnbk Player List file"
-        base: "master"
+        base: "main"
         delete-branch: true
         labels: "automated update"

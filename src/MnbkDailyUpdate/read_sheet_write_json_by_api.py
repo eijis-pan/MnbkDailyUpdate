@@ -11,6 +11,7 @@ import config
 from scripts.google_auth import get_google_auth_settngs
 # from scripts.sheet_api_mnbk_personal import (get_entry_player_list, get_battled_player_list)
 from scripts.sheet_api_joined_names import (get_entry_player_list, get_battled_player_list)
+from scripts.cleanup_personal_file import cleanup_battled_json
 
 logger = getLogger(__name__)
 logger.setLevel(INFO)

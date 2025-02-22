@@ -73,6 +73,8 @@ if __name__ == "__main__":
     #     logger.error("エントリー済みプレイヤーリストファイル読み込みに失敗")
     #     exit(3)
 
+    cleanup_battled_json(config.PLAYER_BATTLED_LIST_FILE_PATH_FMT)
+
     for name in nameWithIndex:
         index = nameWithIndex[name]
         logger.debug(f"対戦済みデータ取得 {name} [{index}]")

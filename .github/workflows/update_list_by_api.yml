@@ -2,9 +2,8 @@ name: Update list by api
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: '0 18 * * 2'  # 毎週火曜日18:00 UTC（日本時間 水曜3:00）
-#    - cron: '0 18 * * 5'  # 毎週金曜日18:00 UTC（日本時間 土曜3:00）
+  schedule:
+    - cron: '0 19 * * *' # UTC時間で19時（日本時間で翌朝4時）
 
 jobs:
   update-player-data:

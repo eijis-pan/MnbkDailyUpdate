@@ -1,18 +1,20 @@
-from logging import getLogger, DEBUG, StreamHandler, Formatter, BASIC_FORMAT
+from logging import getLogger, INFO, DEBUG, StreamHandler, Formatter, BASIC_FORMAT
 import json
 
 import config
 from scripts.request_url import get_json
 
 logger = getLogger(__name__)
-logger.setLevel(DEBUG)
+logger.setLevel(INFO)
+# logger.setLevel(DEBUG)
 
 handler = StreamHandler()
 handler.setFormatter(Formatter(BASIC_FORMAT))
-handler.setLevel(DEBUG)
+handler.setLevel(INFO)
+# handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
-def battled_player_list(name: str, hash: str):
+def battled_player_list(name: str, index: int):
     try:
         battledPlayerList = get_json(name)
         logger.debug(battledPlayerList)
@@ -21,7 +23,7 @@ def battled_player_list(name: str, hash: str):
         return 1
 
     try:
-        with open(config.PLAYER_BATTLED_LIST_FILE_PATH_FMT.format(hash), mode="w", encoding="utf-8") as file:
+        with open(config.PLAYER_BATTLED_LIST_FILE_PATH_FMT.format(index), mode="w", encoding="utf-8") as file:
             json.dump(battledPlayerList, file, ensure_ascii=False)
     except Exception as e:
         logger.error(f"対戦済みデータファイル作成に失敗 [ {name} ]")
@@ -40,8 +42,8 @@ if __name__ == "__main__":
 
     ret = 0
     for entryPlayer in entryPlayerList:
-        hash = entryPlayerList[entryPlayer]
-        ret = battled_player_list(entryPlayer, hash)
+        index = entryPlayerList[entryPlayer]
+        ret = battled_player_list(entryPlayer, index)
 
     exit(ret)
 

@@ -1,16 +1,17 @@
-from logging import getLogger, DEBUG, StreamHandler, Formatter, BASIC_FORMAT
+from logging import getLogger, INFO, DEBUG, StreamHandler, Formatter, BASIC_FORMAT
 import json
-import os
 
 import config
 from scripts.request_url import get_json
 
 logger = getLogger(__name__)
-logger.setLevel(DEBUG)
+logger.setLevel(INFO)
+# logger.setLevel(DEBUG)
 
 handler = StreamHandler()
 handler.setFormatter(Formatter(BASIC_FORMAT))
-handler.setLevel(DEBUG)
+handler.setLevel(INFO)
+# handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
 if __name__ == "__main__":
@@ -21,13 +22,16 @@ if __name__ == "__main__":
         logger.error("データ取得に失敗")
         exit(1)
 
-    nameWithHash = {}
+    nameWithIndex = {}
+    i = 0
     for entryPlayer in entryPlayerList:
-        nameWithHash[entryPlayer] = f"{hash(entryPlayer):X}"
+        # nameWithHash[entryPlayer] = f"{hash(entryPlayer):X}"
+        nameWithIndex[entryPlayer] = i
+        i += 1
 
     try:
         with open(config.ENTRY_PLAYER_LIST_FILE_PATH, mode="w", encoding="utf-8") as file:
-            json.dump(nameWithHash, file, ensure_ascii=False)
+            json.dump(nameWithIndex, file, ensure_ascii=False)
     except Exception as e:
         logger.error("データファイル作成に失敗")
         exit(2)

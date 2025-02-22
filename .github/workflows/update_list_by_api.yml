@@ -1,4 +1,4 @@
-name: Update list
+name: Update list by api
 
 on:
   workflow_dispatch:
@@ -34,7 +34,7 @@ jobs:
         GCP_CLIENT_EMAIL: ${{ secrets.GCP_CLIENT_EMAIL }}
         GCP_CLIENT_ID: ${{ secrets.GCP_CLIENT_ID }}
         GCP_CLIENT_X509_CERT_URL: ${{ secrets.GCP_CLIENT_X509_CERT_URL }}
-        MNBK_SPREADSHEET_URL: ${{ vars.MNBK_SPREADSHEET_URL }}
+        MNBK_SPREADSHEET_ID: ${{ vars.MNBK_SPREADSHEET_ID }}
       run: |
         uv run python src/MnbkDailyUpdate/read_sheet_write_json_by_api.py
 

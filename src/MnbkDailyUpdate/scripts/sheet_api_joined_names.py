@@ -7,13 +7,13 @@ from logging import getLogger, INFO, DEBUG, StreamHandler, Formatter, BASIC_FORM
 
 
 logger = getLogger(__name__)
-# logger.setLevel(INFO)
-logger.setLevel(DEBUG)
+logger.setLevel(INFO)
+# logger.setLevel(DEBUG)
 
 handler = StreamHandler()
 handler.setFormatter(Formatter(BASIC_FORMAT))
-# handler.setLevel(INFO)
-handler.setLevel(DEBUG)
+handler.setLevel(INFO)
+# handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
 RequestIntervalSeconds = 2
@@ -44,12 +44,14 @@ def get_battled_player_list(spread_sheet: Spreadsheet, index: int) -> list:
     except gspread.exceptions.APIError as e:
         logger.error(e.response.reason)
 
+    logger.debug(player_names)
     if player_names is None:
         return player_list
 
     i = 0
     for player_name in player_names.split("\t"):
         if i == 0 and 0 < len(player_name):
+            i += 1
             continue
         if not player_name:
             break

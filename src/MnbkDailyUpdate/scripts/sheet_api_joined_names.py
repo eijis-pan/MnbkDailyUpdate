@@ -7,11 +7,13 @@ from logging import getLogger, INFO, DEBUG, StreamHandler, Formatter, BASIC_FORM
 
 
 logger = getLogger(__name__)
-logger.setLevel(DEBUG)
+logger.setLevel(INFO)
+# logger.setLevel(DEBUG)
 
 handler = StreamHandler()
 handler.setFormatter(Formatter(BASIC_FORMAT))
-handler.setLevel(DEBUG)
+handler.setLevel(INFO)
+# handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
 RequestIntervalSeconds = 2

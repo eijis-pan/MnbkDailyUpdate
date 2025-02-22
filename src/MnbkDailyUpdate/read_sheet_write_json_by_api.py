@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
     try:
         with open(config.ENTRY_PLAYER_LIST_FILE_PATH, mode="w", encoding="utf-8") as file:
-            json.dump(nameWithIndex, file, ensure_ascii=False)
+            json.dump(nameWithIndex, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
     except Exception as e:
         logger.error("エントリー済みプレイヤーリストデータファイル作成に失敗")
         exit(4)
@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
         try:
             with open(config.PLAYER_BATTLED_LIST_FILE_PATH_FMT.format(index), mode="w", encoding="utf-8") as file:
-                json.dump(names, file, ensure_ascii=False)
+                json.dump(names, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
         except Exception as e:
             logger.error(f"対戦済みデータファイル作成に失敗 [ {name} ]")
             exit(6)

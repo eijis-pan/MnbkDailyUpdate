@@ -28,11 +28,15 @@ jobs:
 
     - name: Run Update Script
       env:
-        GSP_ACCESS_TOKEN: ${{ secrets.GSP_ACCESS_TOKEN }}
-        MNBK_SPREADSHEET_DEPLOY_URL: ${{ vars.MNBK_SPREADSHEET_DEPLOY_URL }}
+        GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        GCP_PRIVATE_KEY_ID: ${{ secrets.GCP_PRIVATE_KEY_ID }}
+        GCP_PRIVATE_KEY: ${{ secrets.GCP_PRIVATE_KEY }}
+        GCP_CLIENT_EMAIL: ${{ secrets.GCP_CLIENT_EMAIL }}
+        GCP_CLIENT_ID: ${{ secrets.GCP_CLIENT_ID }}
+        GCP_CLIENT_X509_CERT_URL: ${{ secrets.GCP_CLIENT_X509_CERT_URL }}
+        MNBK_SPREADSHEET_URL: ${{ vars.MNBK_SPREADSHEET_URL }}
       run: |
-        uv run python src/MnbkDailyUpdate/entry_player_list.py
-        uv run python src/MnbkDailyUpdate/battled_player_list.py
+        uv run python src/MnbkDailyUpdate/read_sheet_write_json_by_api.py
 
     - name: Check for changes
       run: |

@@ -15,4 +15,5 @@ dependencies = [
 dev-dependencies = [
     "ipykernel>=6.29.5",
     "ruff>=0.6.9",
+    "gspread>=5.12.4",
 ]

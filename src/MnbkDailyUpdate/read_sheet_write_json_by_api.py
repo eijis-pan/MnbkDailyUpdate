@@ -15,13 +15,13 @@ from scripts.sheet_api_joined_names import (get_entry_player_list, get_battled_p
 from scripts.cleanup_personal_file import cleanup_battled_json
 
 logger = getLogger(__name__)
-logger.setLevel(INFO)
-# logger.setLevel(DEBUG)
+# logger.setLevel(INFO)
+logger.setLevel(DEBUG)
 
 handler = StreamHandler()
 handler.setFormatter(Formatter(BASIC_FORMAT))
-handler.setLevel(INFO)
-# handler.setLevel(DEBUG)
+# handler.setLevel(INFO)
+handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
 if __name__ == "__main__":

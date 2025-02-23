@@ -1,3 +1,4 @@
+import time
 import json
 import tempfile
 from logging import getLogger, INFO, DEBUG, StreamHandler, Formatter, BASIC_FORMAT
@@ -94,3 +95,10 @@ if __name__ == "__main__":
         except Exception as e:
             logger.error(f"対戦済みデータファイル作成に失敗 [ {name} ]")
             exit(6)
+
+    try:
+        with open(config.TIMESTAMP_FILE_PATH, mode="w", encoding="utf-8") as file:
+            json.dump({"timestamp":int(time.time())}, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
+    except Exception as e:
+        logger.error("データ更新タイムスタンプファイル作成に失敗")
+        exit(7)

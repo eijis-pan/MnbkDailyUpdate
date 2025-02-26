@@ -37,6 +37,9 @@ jobs:
       run: |
         uv run python src/MnbkDailyUpdate/read_sheet_write_json_by_api.py
 
+    - name: Debug exported files
+      run: ls -la src/MnbkDailyUpdate/data
+
     - name: Check for changes
       run: |
         git config --global user.name "github-actions[bot]"

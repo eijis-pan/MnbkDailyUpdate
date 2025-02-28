@@ -60,9 +60,15 @@ if __name__ == "__main__":
         logger.error("エントリー済みプレイヤーリスト取得に失敗")
         exit(3)
 
+    namesWithTimestamp = {
+        "timestamp": int(time.time()),
+        "entry_player_list": nameWithIndex,
+    }
+
     try:
         with open(config.ENTRY_PLAYER_LIST_FILE_PATH, mode="w", encoding="utf-8") as file:
-            json.dump(nameWithIndex, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
+            # json.dump(nameWithIndex, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
+            json.dump(namesWithTimestamp, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
     except Exception as e:
         logger.error("エントリー済みプレイヤーリストデータファイル作成に失敗")
         exit(4)
@@ -96,9 +102,9 @@ if __name__ == "__main__":
             logger.error(f"対戦済みデータファイル作成に失敗 [ {name} ]")
             exit(6)
 
-    try:
-        with open(config.TIMESTAMP_FILE_PATH, mode="w", encoding="utf-8") as file:
-            json.dump({"timestamp":int(time.time())}, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
-    except Exception as e:
-        logger.error("データ更新タイムスタンプファイル作成に失敗")
-        exit(7)
+    # try:
+    #     with open(config.TIMESTAMP_FILE_PATH, mode="w", encoding="utf-8") as file:
+    #         json.dump({"timestamp":int(time.time())}, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
+    # except Exception as e:
+    #     logger.error("データ更新タイムスタンプファイル作成に失敗")
+    #     exit(7)

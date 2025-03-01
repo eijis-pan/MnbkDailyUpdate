@@ -96,16 +96,16 @@ if __name__ == "__main__":
             continue
 
         try:
-            # with open(config.PLAYER_BATTLED_LIST_FILE_PATH_FMT.format(index), mode="w", encoding="utf-8") as file:
-            #     json.dump(names, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
-            file = open(config.PLAYER_BATTLED_LIST_FILE_PATH_FMT.format(index), mode="w", encoding="utf-8")
-            json.dump(names, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
+            with open(config.PLAYER_BATTLED_LIST_FILE_PATH_FMT.format(index), mode="w", encoding="utf-8") as file:
+                json.dump(names, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
+            # file = open(config.PLAYER_BATTLED_LIST_FILE_PATH_FMT.format(index), mode="w", encoding="utf-8")
+            # json.dump(names, file, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
         except Exception as e:
             logger.error(f"対戦済みデータファイル作成に失敗 [ {name} ]")
             exit(6)
-        finally:
-            if file:
-                file.close()
+        # finally:
+        #     if file:
+        #         file.close()
 
     # try:
     #     with open(config.TIMESTAMP_FILE_PATH, mode="w", encoding="utf-8") as file:

@@ -12,7 +12,8 @@ permissions:
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'eijis-pan'
+    if: startsWith(github.head_ref, 'update/')
+    # if: github.event.pull_request.user.login == 'eijis-pan'
     env:
       PR_URL: ${{github.event.pull_request.html_url}}
       GITHUB_TOKEN: ${{ secrets.EIJIS_GITHUB_TOKEN }}

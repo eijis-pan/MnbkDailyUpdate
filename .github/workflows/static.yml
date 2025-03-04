@@ -3,8 +3,15 @@ name: Deploy static content to Pages
 
 on:
   # Runs on pushes targeting the default branch
-  push:
+#  push:
+#    branches: ["update/player-data"]
+  pull_request:
     branches: ["update/player-data"]
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,6 +40,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: update/player-data
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

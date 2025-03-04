@@ -6,7 +6,7 @@ on:
 #  push:
 #    branches: ["update/player-data"]
   pull_request:
-    branches: ["update/player-data"]
+    branches: ["main"]
     types:
       - opened
       - reopened

@@ -5,8 +5,8 @@ on:
   # Runs on pushes targeting the default branch
   push:
     #branches: ["update/player-data"]
-    branches-ignore: ["main"]
-    paths: ["src/MnbkDailyUpdate/data/*"]
+    #branches-ignore: ["main"]
+    paths: ["src/MnbkDailyUpdate/data/*.json"]
   #pull_request:
   #  branches: ["main"]
   #  types:

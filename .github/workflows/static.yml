@@ -3,13 +3,15 @@ name: Deploy static content to Pages
 
 on:
   # Runs on pushes targeting the default branch
-#  push:
-#    branches: ["update/player-data"]
-  pull_request:
-    branches: ["main"]
-    types:
-      - opened
-      - reopened
+  push:
+    #branches: ["update/player-data"]
+    branches-ignore: ["main"]
+    paths: ["src/MnbkDailyUpdate/data/*"]
+  #pull_request:
+  #  branches: ["main"]
+  #  types:
+      #- opened
+      #- reopened
       #- synchronize
       #- ready_for_review
 

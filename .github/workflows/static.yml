@@ -14,7 +14,7 @@ on:
       - ready_for_review
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  #workflow_dispatch:
   #schedule:
   #  - cron: '0 20 * * *' # UTC時間で20時（日本時間で翌朝5時）
 

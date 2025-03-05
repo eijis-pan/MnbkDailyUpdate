@@ -48,16 +48,27 @@ jobs:
 
         git diff --quiet || echo "CHANGES_DETECTED=true" >> $GITHUB_ENV
 
-    - name: Create Pull Request
-      if: env.CHANGES_DETECTED == 'true'
-      uses: peter-evans/create-pull-request@v6
-      with:
-        branch: "update/player-data"
-        title: "Update Player Data (Automated)"
-        body: |
-          This pull request updates the Mnbk Player List file.
-          - Automated update from GitHub Actions.
-        commit-message: "Update Mnbk Player List file"
-        base: "main"
-        #delete-branch: true
-        labels: "automated update"
+    - name: 差分を push
+      run: |
+        git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+        git config --global user.name "${GITHUB_ACTOR}"
+        git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        if (git diff --shortstat | grep '[0-9]'); then \
+          git add .; \
+          git commit -m "GitHub Actions から差分を Push"; \
+          git push origin HEAD:${GITHUB_REF}; \
+        fi
+
+#    - name: Create Pull Request
+#      if: env.CHANGES_DETECTED == 'true'
+#      uses: peter-evans/create-pull-request@v6
+#      with:
+#        branch: "update/player-data"
+#        title: "Update Player Data (Automated)"
+#        body: |
+#          This pull request updates the Mnbk Player List file.
+#          - Automated update from GitHub Actions.
+#        commit-message: "Update Mnbk Player List file"
+#        base: "main"
+#        #delete-branch: true
+#        labels: "automated update"

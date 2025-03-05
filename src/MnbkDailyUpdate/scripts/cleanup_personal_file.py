@@ -11,7 +11,7 @@ handler.setLevel(INFO)
 # handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
-BattledPlayerMaxCount = 100 # 0..99
+BattledPlayerMaxCount = 200 # 0..199
 
 # 対戦済みプレイヤー名のファイルを空にする
 def cleanup_battled_json(file_name_fmt) -> None:

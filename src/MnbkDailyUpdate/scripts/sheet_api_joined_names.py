@@ -16,7 +16,7 @@ handler.setLevel(INFO)
 # handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
-RequestIntervalSeconds = 1.8 # ok 1.8 / ng 1.5
+RequestIntervalSeconds = 1.9 # ok 1.9 / mix 1.8 / ng 1.5
 PersonaDataSheetName = "シート18"
 EntryPlayerCell = "A1"
 BattledPlayerStartCol = "C"

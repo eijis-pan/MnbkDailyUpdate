@@ -11,7 +11,7 @@ import os
 import config
 from scripts.google_auth import get_google_auth_settngs
 # from scripts.sheet_api_mnbk_personal import (get_entry_player_list, get_battled_player_list)
-from scripts.sheet_api_joined_names import (get_entry_player_list, get_battled_player_list)
+from scripts.sheet_api_joined_names import (get_entry_player_list, get_battled_player_list, EntrySheetName, PersonaDataSheetName)
 from scripts.cleanup_personal_file import cleanup_battled_json
 
 logger = getLogger(__name__)
@@ -55,10 +55,25 @@ if __name__ == "__main__":
         exit(2)
 
     try:
-        nameWithIndex = get_entry_player_list(spread_sheet)
+        nameWithIndex = get_entry_player_list(spread_sheet, EntrySheetName)
     except Exception as e:
         logger.error("エントリー済みプレイヤーリスト取得に失敗")
         exit(3)
+
+    # 対戦済みリストのインデックス部分を取得する
+    try:
+        nameWithIndex_battled = get_entry_player_list(spread_sheet, PersonaDataSheetName)
+    except Exception as e:
+        logger.error("対戦済みリストのインデックス取得に失敗")
+        exit(8)
+
+    # エントリー済みプレイヤー名のリストを対戦済みリストのインデックスに付け替える
+    for name in nameWithIndex:
+        if name in nameWithIndex_battled:
+            battled_index = nameWithIndex_battled[name]
+            nameWithIndex[name] = battled_index
+        else:
+            nameWithIndex[name] = -1
 
     namesWithTimestamp = {
         "timestamp": int(time.time()),
@@ -84,6 +99,9 @@ if __name__ == "__main__":
 
     for name in nameWithIndex:
         index = nameWithIndex[name]
+        if index < 0:
+            continue
+
         logger.debug(f"対戦済みデータ取得 {name} [{index}]")
         try:
             names = get_battled_player_list(spread_sheet, index)

@@ -17,12 +17,20 @@ handler.setLevel(INFO)
 logger.addHandler(handler)
 
 RequestIntervalSeconds = 1.9 # ok 1.9 / mix 1.8 / ng 1.5
-PersonaDataSheetName = "シート18"
+
+# # MNBK 5TH
+# PersonaDataSheetName = "シート18"
 EntryPlayerCell = "A1"
-BattledPlayerStartCol = "C"
+# BattledPlayerStartCol = "C"
 BattledPlayerStartRow = 2
-BattledPlayerRowSkip = 5
-BattledPlayerCheckMaxRow  = 1000
+# BattledPlayerRowSkip = 5
+BattledPlayerCheckMaxRow = 1000
+
+# MNBK 6TH
+EntrySheetName = "集約：エントリー"
+PersonaDataSheetName = "集約：対戦済み"
+BattledPlayerStartCol = "A"
+BattledPlayerRowSkip = 1
 
 
 # タブで連結された対戦済みプレイヤー名のリストを取得する
@@ -64,8 +72,8 @@ def get_battled_player_list(spread_sheet: Spreadsheet, index: int) -> list:
     return player_list
 
 # タブで連結されたエントリー済みプレイヤー名のリストを取得する
-def get_entry_player_list(spread_sheet: Spreadsheet) -> dict:
-    work_sheet = spread_sheet.worksheet(PersonaDataSheetName)
+def get_entry_player_list(spread_sheet: Spreadsheet, sheet_name: str) -> dict:
+    work_sheet = spread_sheet.worksheet(sheet_name)
 
     start = time.time()
     player_list = {}

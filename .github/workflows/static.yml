@@ -18,7 +18,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
-    - cron: '0 20 * * *' # UTC時間で20時（日本時間で翌朝5時）
+    - cron: '0 12,14,20 * * *' # UTC時間で20時（日本時間で翌朝5時）
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:

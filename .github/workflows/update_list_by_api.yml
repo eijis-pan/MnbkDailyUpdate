@@ -72,3 +72,7 @@ jobs:
 #        base: "main"
 #        #delete-branch: true
 #        labels: "automated update"
+
+  call-workflow:
+    needs: [update-player-data]
+    uses: ./.github/workflows/static.yml

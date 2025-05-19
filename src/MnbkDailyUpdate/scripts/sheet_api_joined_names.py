@@ -16,7 +16,7 @@ handler.setLevel(INFO)
 # handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
-RequestIntervalSeconds = 1.9 # ok 1.9 / mix 1.8 / ng 1.5
+RequestIntervalSeconds = 2.0 # ng 1.9 / mix 1.8 / ng 1.5
 
 # # MNBK 5TH
 # PersonaDataSheetName = "シート18"

@@ -1,3 +1,4 @@
+import datetime
 import time
 import json
 import tempfile
@@ -25,6 +26,16 @@ handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
 if __name__ == "__main__":
+
+    timestamp_old = 0
+    try:
+        with open(config.ENTRY_PLAYER_LIST_FILE_PATH, mode="r", encoding="utf-8") as file:
+            namesWithTimestamp_old = json.load(file)
+            timestamp_old = namesWithTimestamp_old.get("timestamp")
+            logger.info("前回のタイムスタンプ {0}".format(datetime.datetime.fromtimestamp(timestamp_old)))
+    except Exception as e:
+        timestamp_old = 0
+    logger.debug("timestamp_old {0}".format(timestamp_old))
 
     auth_settings = get_google_auth_settngs()
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -54,18 +65,42 @@ if __name__ == "__main__":
         logger.error("Google SpreadSheet が見つからないかアクセス権限がありません")
         exit(2)
 
-    try:
-        nameWithIndex = get_entry_player_list(spread_sheet, EntrySheetName)
-    except Exception as e:
-        logger.error("エントリー済みプレイヤーリスト取得に失敗")
-        exit(3)
-
     # 対戦済みリストのインデックス部分を取得する
     try:
         nameWithIndex_battled = get_entry_player_list(spread_sheet, PersonaDataSheetName)
     except Exception as e:
         logger.error("対戦済みリストのインデックス取得に失敗")
         exit(8)
+
+    # インデックス部分の先頭はタイムスタンプ
+    timestamp = time.time()
+    logger.debug("time.time() {0}".format(timestamp))
+    for (name, battled_index) in nameWithIndex_battled.items():
+        if battled_index == 0:
+            logger.info("対戦済みシートのタイムスタンプ {0}".format(name))
+            try:
+                dt = datetime.datetime.strptime(name, '%Y/%m/%d %H:%M:%S') # 2025/05/20 7:21:39
+                timestamp = dt.timestamp()
+                logger.debug("対戦済みシートのタイムスタンプ 変換 {0}".format(timestamp))
+            except Exception as e:
+                logger.error("対戦済みシートのタイムスタンプ変換に失敗")
+                break
+
+            nameWithIndex_battled.pop(name)
+            for (name2, battled_index2) in nameWithIndex_battled.items():
+                nameWithIndex_battled[name2] = battled_index2 - 1
+
+            break
+
+    if timestamp <= timestamp_old:
+        logger.info("対戦済みシートのタイムスタンプ更新なし")
+        exit(0)
+
+    try:
+        nameWithIndex = get_entry_player_list(spread_sheet, EntrySheetName)
+    except Exception as e:
+        logger.error("エントリー済みプレイヤーリスト取得に失敗")
+        exit(3)
 
     # エントリー済みプレイヤー名のリストを対戦済みリストのインデックスに付け替える
     max_battled_index = -1
@@ -86,7 +121,7 @@ if __name__ == "__main__":
             empty_names.append(name)
 
     namesWithTimestamp = {
-        "timestamp": int(time.time()),
+        "timestamp": int(timestamp),
         "entry_player_list": nameWithIndex,
     }
 

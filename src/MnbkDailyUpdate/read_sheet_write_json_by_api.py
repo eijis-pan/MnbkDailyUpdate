@@ -25,6 +25,9 @@ handler.setFormatter(Formatter(BASIC_FORMAT))
 handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
+# 「集約：エントリー」シートではなく「集約：対戦済み」のインデックスをエントリーリストとして扱う
+BATTLED_INDEX_AS_ENTRY_LIST = True
+
 if __name__ == "__main__":
 
     timestamp_old = 0
@@ -96,22 +99,26 @@ if __name__ == "__main__":
         logger.info("対戦済みシートのタイムスタンプ更新なし")
         exit(0)
 
-    try:
-        nameWithIndex = get_entry_player_list(spread_sheet, EntrySheetName)
-    except Exception as e:
-        logger.error("エントリー済みプレイヤーリスト取得に失敗")
-        exit(3)
+    if BATTLED_INDEX_AS_ENTRY_LIST:
+        logger.info("対戦済みリストのインデックスをエントリー済みプレイヤーリストとして扱う")
+        nameWithIndex = nameWithIndex_battled
+    else:
+        try:
+            nameWithIndex = get_entry_player_list(spread_sheet, EntrySheetName)
+        except Exception as e:
+            logger.error("エントリー済みプレイヤーリスト取得に失敗")
+            exit(3)
 
-    # エントリー済みプレイヤー名のリストを対戦済みリストのインデックスに付け替える
-    max_battled_index = -1
-    for name in nameWithIndex:
-        if name in nameWithIndex_battled:
-            battled_index = nameWithIndex_battled[name]
-            nameWithIndex[name] = battled_index
-            if max_battled_index < battled_index:
-                max_battled_index = battled_index
-        else:
-            nameWithIndex[name] = -1
+        # エントリー済みプレイヤー名のリストを対戦済みリストのインデックスに付け替える
+        max_battled_index = -1
+        for name in nameWithIndex:
+            if name in nameWithIndex_battled:
+                battled_index = nameWithIndex_battled[name]
+                nameWithIndex[name] = battled_index
+                if max_battled_index < battled_index:
+                    max_battled_index = battled_index
+            else:
+                nameWithIndex[name] = -1
 
     empty_names = []
     for (name, battled_index) in nameWithIndex.items():

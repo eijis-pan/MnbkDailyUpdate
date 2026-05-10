@@ -26,7 +26,7 @@ handler.setLevel(DEBUG)
 logger.addHandler(handler)
 
 # 「集約：エントリー」シートではなく「集約：対戦済み」のインデックスをエントリーリストとして扱う
-BATTLED_INDEX_AS_ENTRY_LIST = True
+BATTLED_INDEX_AS_ENTRY_LIST = False
 
 if __name__ == "__main__":
 

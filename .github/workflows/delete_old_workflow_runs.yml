@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1
     env:
-      GITHUB_TOKEN: ${{ github.token }}
-      GITHUB_REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ github.token }}
+      GT_REPO: ${{ github.repository }}
       WORKFLOW: update_list_by_api.yml
 
     steps:

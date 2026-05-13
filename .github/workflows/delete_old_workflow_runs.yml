@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 1
     env:
       GH_TOKEN: ${{ github.token }}
-      GT_REPO: ${{ github.repository }}
+      GH_REPO: ${{ github.repository }}
       WORKFLOW: update_list_by_api.yml
 
     steps:

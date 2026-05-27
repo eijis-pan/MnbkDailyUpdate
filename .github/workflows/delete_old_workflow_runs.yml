@@ -2,6 +2,8 @@ name: Delete old workflow runs
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '45 19 * * *' # UTC時間（日本時間で午前4時45分）
 
 jobs:
   delete-old-workflow-runs:
@@ -11,14 +13,18 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
       WORKFLOW: update_list_by_api.yml
+      WORKFLOW2: delete_old_workflow_runs.yml
 
     steps:
       - run: gh workflow view "${WORKFLOW}"
-#      - run: |
-#          gh run list --workflow "${WORKFLOW}" --limit 20 --json databaseId,status --jq '.[] | select(.status == "completed") | .databaseId' \
-#          | xargs -n 1 -I {} gh api -X DELETE repos/${REPOSITORY}/actions/runs/{}
       - run: |
           gh run list --workflow "${WORKFLOW}" --limit 1000 --json databaseId,status,createdAt --jq '.[] | select(.status == "completed") | select(.createdAt < (now-( 2 * 86400 ) | strftime("%Y-%m-%dT%H-%M-%SZ") )) | .databaseId' \
+          | xargs -n 1 -I {} gh api -X DELETE repos/${REPOSITORY}/actions/runs/{}
+        env:
+          REPOSITORY: ${{ github.repository }}
+      - run: gh workflow view "${WORKFLOW2}"
+      - run: |
+          gh run list --workflow "${WORKFLOW2}" --limit 1000 --json databaseId,status,createdAt --jq '.[] | select(.status == "completed") | select(.createdAt < (now-( 2 * 86400 ) | strftime("%Y-%m-%dT%H-%M-%SZ") )) | .databaseId' \
           | xargs -n 1 -I {} gh api -X DELETE repos/${REPOSITORY}/actions/runs/{}
         env:
           REPOSITORY: ${{ github.repository }}

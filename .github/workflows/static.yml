@@ -58,6 +58,9 @@ jobs:
           path: src/MnbkDailyUpdate/data
           name: mnbkdailyupdate  # Artifactの名前を指定
 
+      - name: Sleep10
+        run: sleep 10
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
